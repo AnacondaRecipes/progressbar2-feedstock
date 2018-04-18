@@ -25,6 +25,7 @@ requirements:
     - python
     - pytest-runner >=2.8
     - python-utils
+    - six
 
 test:
   imports:
