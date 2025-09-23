@@ -1,20 +1,21 @@
 {% set name = "progressbar2" %}
 {% set version = "4.5.0" %}
-{% set sha256 = "6662cb624886ed31eb94daf61e27583b5144ebc7383a17bae076f8f4f59088fb" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: {{ sha256 }}
+  - url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+    sha256: 6662cb624886ed31eb94daf61e27583b5144ebc7383a17bae076f8f4f59088fb
+  - url:  https://github.com/wolph/python-progressbar/archive/refs/tags/v{{ version }}.tar.gz
+    sha256: 5a5faece158050d60ee36a7f61fd3890ffd1bdfde5c25171829bc6cecf9a45ad
+    folder: gh
 
 build:
   number: 0
-  # trigger 1
   skip: true  # [py<38]
-  script: {{ PYTHON }} -m pip install . -vv --no-deps
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
 requirements:
   host:
@@ -27,12 +28,25 @@ requirements:
     - python-utils >=3.8.1
 
 test:
+  source_files:
+    - gh/tests
+    - gh/examples.py
   imports:
     - progressbar
+    - progressbar.__main__
+    - progressbar.env
+    - progressbar.terminal
+    - progressbar.terminal.base
+    - progressbar.terminal.stream
   requires:
     - pip
+    - pytest >=4.6.9
+    - freezegun >=0.3.11
+    - dill >=0.3.6
   commands:
     - pip check
+    - python -c "from importlib.metadata import version; assert(version('{{ name }}')=='{{ version }}')"
+    - pytest gh/tests
 
 about:
   home: https://github.com/WoLpH/python-progressbar
@@ -69,7 +83,7 @@ about:
     - Timer
 
     The progressbar module is very easy to use, yet very powerful. It will also automatically enable features like auto-resizing when the system supports it.
-  doc_url: http://progressbar-2.readthedocs.org/en/latest/
+  doc_url: http://progressbar-2.readthedocs.org
   dev_url: https://github.com/WoLpH/python-progressbar
 
 extra:
