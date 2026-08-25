@@ -1,5 +1,5 @@
 {% set name = "progressbar2" %}
-{% set version = "4.5.0" %}
+{% set version = "4.6.0" %}
 
 package:
   name: {{ name|lower }}
@@ -7,9 +7,9 @@ package:
 
 source:
   - url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-    sha256: 6662cb624886ed31eb94daf61e27583b5144ebc7383a17bae076f8f4f59088fb
-  - url:  https://github.com/wolph/python-progressbar/archive/refs/tags/v{{ version }}.tar.gz
-    sha256: 5a5faece158050d60ee36a7f61fd3890ffd1bdfde5c25171829bc6cecf9a45ad
+    sha256: fe48c8955a84428af77bff2642ba47041e1b8f7c867a5b7cc94f8bc255a8f0cf
+  - url: https://github.com/wolph/python-progressbar/archive/refs/tags/v{{ version }}.tar.gz
+    sha256: 117cd33f2a965b59546828e082457a5c7e23416100fc96412875efdd322724ee
     folder: gh
 
 build:
