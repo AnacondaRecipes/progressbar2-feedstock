@@ -14,8 +14,10 @@ source:
 
 build:
   number: 0
-  skip: true  # [py<38]
+  skip: true  # [py<310]
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  entry_points:
+    - progressbar = progressbar.__main__:main
 
 requirements:
   host:
@@ -48,6 +50,7 @@ test:
     - pywin32  # [win]
   commands:
     - pip check
+    - progressbar --help
     - python -c "from importlib.metadata import version; assert(version('{{ name }}')=='{{ version }}')"
     - cd gh && python -m pytest tests --ignore=tests/console --ignore=tests/test_readme_demos.py --ignore=tests/test_docs_examples.py --deselect tests/test_fastpath.py::test_iterator_overhead_is_low
 
